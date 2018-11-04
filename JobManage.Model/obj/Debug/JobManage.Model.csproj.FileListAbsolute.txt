@@ -1,0 +1,5 @@
+F:\自己的项目与类库\JobManage\JobManage.Model\bin\Debug\JobManage.Model.dll
+F:\自己的项目与类库\JobManage\JobManage.Model\bin\Debug\JobManage.Model.pdb
+F:\自己的项目与类库\JobManage\JobManage.Model\obj\Debug\JobManage.Model.csproj.CoreCompileInputs.cache
+F:\自己的项目与类库\JobManage\JobManage.Model\obj\Debug\JobManage.Model.dll
+F:\自己的项目与类库\JobManage\JobManage.Model\obj\Debug\JobManage.Model.pdb

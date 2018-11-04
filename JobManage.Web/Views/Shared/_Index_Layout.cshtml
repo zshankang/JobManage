@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/res/global/css/font.css" rel="stylesheet" />
+    <link href="~/res/plugins/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/res/global/css/theme.css" rel="stylesheet" />
+    <link href="~/res/plugins/jqgrid/jqgrid.css" rel="stylesheet" />
+    <link href="~/res/global/css/ui.css" rel="stylesheet" />
+    @*留出位置放置样式*@
+    @RenderSection("Styles", false)
+    <script src="~/res/plugins/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/res/plugins/bootstrap/bootstrap.js"></script>
+    <script src="~/res/plugins/jqgrid/jqgrid.min.js"></script>
+    <script src="~/res/plugins/jqgrid/grid.locale-cn.js"></script>
+    <script src="~/res/global/js/job.js"></script>
+    <script src="~/res/global/js/ViewModel.js"></script>
+</head>
+<body>
+    @RenderBody()
+    @*@if (DbRunTimeModule.Enable)
+    {
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @Html.Raw(DbRunTimeModule.GetInfo())
+            </div>
+        </div>
+    }*@
+    @*防伪标志*@
+    @Html.AntiForgeryToken()
+    @*留出位置放置脚本*@
+    @RenderSection("Scripts", false)
+</body>
+</html>

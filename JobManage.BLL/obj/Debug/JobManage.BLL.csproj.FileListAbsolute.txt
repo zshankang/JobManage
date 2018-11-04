@@ -1,0 +1,12 @@
+F:\自己的项目与类库\JobManage\JobManage.BLL\bin\Debug\JobManage.BLL.dll
+F:\自己的项目与类库\JobManage\JobManage.BLL\bin\Debug\JobManage.BLL.pdb
+F:\自己的项目与类库\JobManage\JobManage.BLL\bin\Debug\JobManage.Model.dll
+F:\自己的项目与类库\JobManage\JobManage.BLL\bin\Debug\JobManage.Utity.dll
+F:\自己的项目与类库\JobManage\JobManage.BLL\bin\Debug\MySql.Data.dll
+F:\自己的项目与类库\JobManage\JobManage.BLL\bin\Debug\JobManage.Model.pdb
+F:\自己的项目与类库\JobManage\JobManage.BLL\bin\Debug\JobManage.Utity.pdb
+F:\自己的项目与类库\JobManage\JobManage.BLL\obj\Debug\JobManage.BLL.csprojAssemblyReference.cache
+F:\自己的项目与类库\JobManage\JobManage.BLL\obj\Debug\JobManage.BLL.csproj.CoreCompileInputs.cache
+F:\自己的项目与类库\JobManage\JobManage.BLL\obj\Debug\JobManage.BLL.csproj.CopyComplete
+F:\自己的项目与类库\JobManage\JobManage.BLL\obj\Debug\JobManage.BLL.dll
+F:\自己的项目与类库\JobManage\JobManage.BLL\obj\Debug\JobManage.BLL.pdb

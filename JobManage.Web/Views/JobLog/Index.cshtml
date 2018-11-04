@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="job.common.reload();"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>
+                    <div class="input-group" style="width:380px;">
+                        <input id="txtKey" type="text" class="form-control" placeholder="请输入要查询关键字" style="width: 200px;margin-right:15px;">
+                        <select id="state" name="state" class="form-control" style="width:100px;">
+                            <option value="-1">全部</option>
+                            <option value="0">正常</option>
+                            <option value="1">异常</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="btnSearch" type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+@section Scripts{
+    <script type="text/javascript">var options = {
+            //标题
+            title: "Job管理",
+            //数据查询地址
+            dataQueryUrl: "/JobLog/List",
+            //数据添加地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataAddUrl: "",
+            //数据编辑地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataUpdateUrl: "",
+            //数据查看详情地址
+            dataDetailUrl: "",
+            //数据删除地址
+            dataDeleteUrl: "",
+            //弹窗宽度
+            modalWidth: "850px",
+            //弹窗高度
+            modalHeight: "500px",
+        };
+        //视图模型
+        var viewModel = new ViewModel(options);
+        $(function () {
+            //显示列表数据
+            viewModel.showGridList({                
+                //获取数据的地址
+                url: viewModel.dataQueryUrl,
+                //列模型
+                colModel: [
+                    { label: "主键", name: "Id", hidden: true, key: true },
+                    {
+                        label: "任务名称", name: "Job_name", width: 200, align: "left"
+                    },
+                    { label: "执行结果", name: "Job_result", width: 90, align: "left" },
+                    { label: "异常", name: "Job_exception", width: 400, align: "left" },
+                    {
+                        label: "耗时(ms)", name: "Job_exetime", width: 60, align: "center"
+                    }, {
+                        label: "执行时间", name: "Job_exedate", width: 120, align: "center",
+                        formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
+                    },
+                ],
+                //禁掉其他排序
+                sortable: true,
+                pager: "#gridPager",
+                //动态实时获取搜索条件数据
+                getSearchData: function () {
+                    return { key: $("#txtKey").val(), state: $('#state').val() };
+                }
+            });
+            //添加授权的初始按钮
+            // $("#btnInit").append(cloud.auth.grantedButtons({ location: 1 }));
+            setTimeout(function () {
+                $('#btnSearch').click();
+            }, 1000);
+        });
+    </script>
+}
+

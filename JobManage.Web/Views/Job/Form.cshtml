@@ -1,0 +1,242 @@
+﻿
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form_Layout.cshtml";
+}
+
+@section Styles{
+    <style type="text/css">
+        .listview li {
+            width: 80px;
+        }
+    </style>
+}
+<form id="form1">
+    <div style="margin-top: 10px; margin-left: 10px; margin-right: 10px;">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#base">基本信息</a></li>
+            <li class=""><a data-toggle="tab" href="#corn">cron表达式</a></li>
+        </ul>
+        <div class="tab-content" style="padding-top:15px;margin-right:30px;">
+            <div class="tab-pane active" id="base">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">任务名称</th>
+                        <td class="formValue" colspan="3">
+                            <input type="hidden" id="id" name="id" value="0" />
+                            <input class="form-control required" type="text" id="job_name" name="job_name" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">执行的DLL</th>
+                        <td class="formValue"><input class="form-control required" type="text" id="job_assembly" name="job_assembly" value="" /></td>
+                        <th class="formTitle">执行的方法类</th>
+                        <td class="formValue">
+                            <input class="form-control" type="text" id="job_class" name="job_class" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">corn表达式</th>
+                        <td class="formValue">
+                            <input class="form-control required" type="text" id="job_corn" name="job_corn" readonly="readonly" value="" />
+                        </td>
+                        <th class="formTitle">任务类型</th>
+                        <td class="formValue">
+                            <select id="job_type" name="job_type" class="form-control select2-control required">
+                                <option value="1" title="简单任务">简单任务</option>
+                                <option value="2" title="复杂任务">复杂任务</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle" style="height: 35px;">执行的总次数</th>
+                        <td class="formValue" style="padding-top: 1px;">
+                            <input class="form-control" type="text" id="job_execount" name="job_execount" value="0" />
+                        </td>
+                        <th class="formTitle"></th>
+                        <td class="formValue">
+                            0表示无限次
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle" valign="top" style="padding-top: 5px;">
+                            开始执行时间
+                        </th>
+                        <td class="formValue">
+                            <input class="form-control required" type="text" id="job_starttime" name="job_starttime" value="@(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))" readonly="readonly" onFocus="WdatePicker({startDate:'@(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))',dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                        </td>
+                        <th class="formTitle">任务的状态</th>
+                        <td class="formValue">
+                            <select id="job_state" name="job_state" class="form-control select2-control">
+                                <option value="0" title="准备中">准备中</option>
+                                <option value="1" title="执行中">执行中</option>
+                                <option value="2" title="暂定">暂定</option>
+                                <option value="3" title="停止">停止</option>
+                                <option value="4" title="结束">结束</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab-pane" id="corn">
+                <table class="form">
+                    <tr>
+                        <th class="formTitle">秒</th>
+                        <td class="formValue">
+                            <input class="form-control required" type="text" id="c_seconds" name="c_seconds" value="0" />
+                        </td>
+                        <th class="formTitle">说明</th>
+                        <td class="formValue">
+                            默认为0<br />
+                            在...秒范围或之间,格式1:1,2,5秒 格式2:1-3秒<br />
+                            每...秒重复执行,格式1: 0/10 每10秒重复执行,格式2: 3/30 由第3秒开始每隔30秒重复执行
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">分</th>
+                        <td class="formValue">
+                            <input class="form-control required" type="text" id="c_minutes" name="c_minutes" value="0" />
+                        </td>
+                        <th class="formTitle">说明</th>
+                        <td class="formValue">
+                            默认为0<br />
+                            *表示为每分钟<br />
+                            在...分钟范围或之间,格式1:1,2,5 表示在1,2,5分钟 格式2:1-3 表示在1-3分钟<br />
+                            每...分钟重复执行,格式1:0/10 表示每10分钟重复执行,格式2:3/30 表示由第3分钟开始每隔30分钟重复执行
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">时</th>
+                        <td class="formValue">
+                            <input class="form-control required" type="text" id="c_hours" name="c_hours" value="*" />
+                        </td>
+                        <th class="formTitle">说明</th>
+                        <td class="formValue">
+                            默认为*<br />
+                            *表示为每小时<br />
+                            在...小时范围或之间,格式1:1,2,5 表示在1,2,5小时 格式2:1-3 表示在1-3小时<br />
+                            每...小时重复执行,格式1:0/10 表示每10小时重复执行,格式2:3/4 表示由第3小时开始每隔4小时重复执行
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">天/月</th>
+                        <td class="formValue">
+                            <input class="form-control required" type="text" id="c_dayofmonth" name="c_dayofmonth" value="*" />
+                        </td>
+                        <th class="formTitle">说明</th>
+                        <td class="formValue">
+                            默认为*<br />
+                            *表示为每个月中的所有日<br />
+                            在...天范围或之间,格式1:1,2,5 表示在第1,2,5天 格式2:1-3 表示在1-3天<br />
+                            每...天重复执行,格式1:0/10 表示每10天重复执行,格式2:3/4 表示由第3天开始每隔4天重复执行
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">月</th>
+                        <td class="formValue">
+                            <input class="form-control required" type="text" id="c_month" name="c_month" value="*" />
+                        </td>
+                        <th class="formTitle">说明</th>
+                        <td class="formValue">
+                            默认为*<br />
+                            *表示为所有的月<br />
+                            ?表示为不设置<br />
+                            在...月范围或之间,格式1:1,2,5 表示在第1,2,5月 格式2:1-3 表示在1到3月<br />
+                            每...月重复执行,格式1:0/3 表示每3月重复执行,格式2:3/4 表示由第3个月开始每隔4个月重复执行
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle">日/周</th>
+                        <td class="formValue">
+                            <input class="form-control required" type="text" id="c_dayweek" name="c_dayweek" value="?" />
+                        </td>
+                        <th class="formTitle">说明</th>
+                        <td class="formValue">
+                            默认为?<br />
+                            *表示为周中所有的天<br />
+                            ?表示为不设置<br />
+                            在...周范围或之间,格式1:1,2,5 表示在第1,2,5天 格式2:1-3 表示在1到3天<br />
+                            每...周重复执行,格式1:0/3 表示每3天重复执行,格式2:3/4 表示由第3个天开始每隔4个天重复执行
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="formTitle"></th>
+                        <td class="formValue" colspan="3">
+                            <input class="btn btn-default btn-primary" type="button" id="btn_chk" value="检测表达式" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script src="~/res/plugins/datepicker/WdatePicker.js"></script>
+    <script src="~/res/job/jobcorn.js"></script>
+    <script type="text/javascript">
+        //获取当前页面的请求参数，以对象的形式返回
+        var requestData = job.common.getRequestData();
+        var options = {
+            //标题
+            title: "任务表单",
+            //单条数据查询地址
+            dataQueryOneUrl: "/job/GetOne",
+            //数据添加地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataAddUrl: "/job/Add",
+            //数据编辑地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataUpdateUrl: "/job/Add",
+            //点击“添加数据”对话框的确定按钮提交数据并关闭对话框
+            onDataAdded: function () {
+                CreateCronExpression();
+                return this.submitForm(this.dataAddUrl);
+            },
+            //点击“编辑数据”对话框的确定按钮提交数据并关闭对话框
+            onDataUpdated: function () {
+                CreateCronExpression();
+                return this.submitForm(this.dataUpdateUrl);
+            }
+        };
+        //视图模型
+        var viewModel = new ViewModel(options);
+        /**初始化控件**/
+        function initControl() {
+            $('#btn_chk').click(function () {
+                CreateCronExpression();
+            });
+            //非查看详情页面才允许修改状态
+            if (requestData.type != "detail" && requestData.id == "0") {
+                //隐藏状态
+                $("#job_state").parent().hide();
+                $("#job_state").parent().prev().hide();
+            }
+            //id不为0说明是编辑或者查看详情页面
+            if (requestData.id != "0") {
+
+                //加载数据
+                viewModel.formLoad({
+                    params: { id: requestData.id },
+                    //请求类型
+                    type: requestData.type,
+                    success: function (result) {
+                        //将数据反序列化绑定到表单上
+                        job.form.deserialize("form1", result.Data);
+                        //初始cron
+                        InitCrom();
+                        //设置表单控件只读,只允许修改状态
+                        //if (requestData.type == "detail") {
+                            var $form = $("#form1");
+                            $form.find('.form-control,select,input').attr('readonly', 'readonly');
+                            $form.find('div.ckbox label').attr('for', '');
+                            $form.find('#job_type').attr('disabled', 'disabled');
+                            $form.find("#job_state").attr('disabled', 'disabled');
+                        //}
+                    }
+                });
+            }
+        }
+
+        $(function () {
+            initControl();
+        });
+    </script>
+}

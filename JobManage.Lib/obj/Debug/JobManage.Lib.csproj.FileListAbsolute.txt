@@ -1,0 +1,6 @@
+F:\自己的项目与类库\JobManage\JobManage.Lib\bin\Debug\JobManage.Lib.dll
+F:\自己的项目与类库\JobManage\JobManage.Lib\bin\Debug\JobManage.Lib.pdb
+F:\自己的项目与类库\JobManage\JobManage.Lib\obj\Debug\JobManage.Lib.csproj.CoreCompileInputs.cache
+F:\自己的项目与类库\JobManage\JobManage.Lib\obj\Debug\JobManage.Lib.dll
+F:\自己的项目与类库\JobManage\JobManage.Lib\obj\Debug\JobManage.Lib.pdb
+F:\自己的项目与类库\JobManage\JobManage.Lib\obj\Debug\JobManage.Lib.csprojAssemblyReference.cache

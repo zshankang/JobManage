@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/res/global/css/font.css" rel="stylesheet" />
+    <link href="~/res/plugins/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/res/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/res/plugins/select2/select2-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/res/global/css/theme.css" rel="stylesheet" />
+    <link href="~/res/global/css/ui.css" rel="stylesheet" />
+    @*留出位置放置样式*@
+    @RenderSection("Styles", false)
+    <script src="~/res/plugins/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/res/plugins/bootstrap/bootstrap.js"></script>
+    <script src="~/res/plugins/select2/select2.min.js"></script>
+    <script src="~/res/plugins/select2/i18n/zh-CN.js"></script>
+    <script src="~/res/plugins/jquery/jquery.validate.min.js"></script>
+    <script src="~/res/global/js/job.js"></script>
+    <script src="~/res/global/js/ViewModel.js"></script>
+</head>
+<body>
+    @RenderBody()
+    @*防伪标志*@
+    @Html.AntiForgeryToken()
+    @*留出位置放置脚本*@
+    @RenderSection("Scripts", false)
+</body>
+</html>

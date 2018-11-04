@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index_Layout.cshtml";
+}
+
+<div class="topPanel">
+    <div class="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" onclick="job.common.reload();"><span class="glyphicon glyphicon-refresh"></span></a>
+        </div>
+        <div id="btnInit" class="btn-group">
+            <a title="添加" class="btn btn-primary dropdown-text" onclick="viewModel.onDataAdding()"><i class="fa fa-plus"></i>添加</a>
+        </div>
+    </div>
+    <div class="search">
+        <table>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtKey" type="text" class="form-control" placeholder="请输入要查询关键字" style="width: 200px;">
+                        <span class="input-group-btn">
+                            <button id="btnSearch" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+@section Scripts{
+    <script type="text/javascript">var options = {
+            //标题
+            title: "Job管理",
+            //数据查询地址
+            dataQueryUrl: "/Job/List",
+            //数据添加地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataAddUrl: "/Job/Add",
+            //数据编辑地址，视图与操作是一个地址，只是请求方式及参数不同
+            dataUpdateUrl: "/Job/Add",
+            //数据查看详情地址
+            dataDetailUrl: "/Job/Detail",
+            //数据删除地址
+            dataDeleteUrl: "/Job/Delete",
+            //弹窗宽度
+            modalWidth: "800px",
+            //弹窗高度
+            modalHeight: "500px",
+        };
+        //视图模型
+        var viewModel = new ViewModel(options);
+        $(function () {
+            //显示列表数据
+            viewModel.showGridList({
+                ////是否是树列表
+                //treeGrid: true,
+                ////树展开方式：默认是Nested(嵌套的)，这里使用adjacency(相邻的)
+                //treeGridModel: "adjacency",
+                ////指定哪列来展开tree grid，默认为第一列，只有在treeGrid为true时起作用
+                //ExpandColumn: "",
+                //获取数据的地址
+                url: viewModel.dataQueryUrl,
+                //列模型
+                colModel: [
+                    { label: "主键", name: "Id", hidden: true, key: true },
+                    {
+                        label: "任务名称", name: "Job_name", width: 200, align: "left"
+                    },
+                    { label: "程序集", name: "Job_assembly", width: 150, align: "left" },
+                    { label: "方法", name: "Job_class", width: 150, align: "left" },
+                    {
+                        label: "执行间隔", name: "Job_corn", width: 100, align: "center"
+                    },
+                    {
+                        label: "任务类型", name: "Job_type", width: 80, align: "center",
+                        //数据格式化
+                        formatter: function (value) {
+                            switch (value) {
+                                case 1: return "简单任务";
+                                case 2: return "复杂任务";
+                            }
+                        }
+                    },
+                    {
+                        label: "执行次数", name: "Job_execount", width: 50, align: "center"
+                    }, {
+                        label: "开始时间", name: "Job_starttime", width: 120, align: "center",
+                        formatter: "date", formatoptions: { srcformat: 'Y-m-d H:i:s', newformat: 'Y-m-d H:i:s' }
+                    }, {
+                        label: "任务状态", name: "Job_state", width: 80, align: "center",
+                        //数据格式化
+                        formatter: function (value) {
+                            switch (value) {
+                                case 0: return "准备中";
+                                case 1: return "执行中";
+                                case 2: return "暂停";
+                                case 3: return "停止";
+                                case 4: return "结束";
+                            }
+                        }
+                    },
+                    {
+                        label: '操作', name: 'Id', width: 250, align: 'center', classes: 'operate', sortable: false,
+                        /**
+                         * 数据格式化
+                         * 参数 value 列值 options 选项 row 行数据
+                         */
+                        formatter: function (value, options, row) {
+                            var html = '';
+                            html += '<a id="" title="查看"  authorize="yes" onclick="viewModel.onDataDetailing(' + value + ')"><i class="fa fa-search-plus"></i>查看</a>';
+                            //html += '<a id="" title="编辑"  authorize="yes" onclick="viewModel.onDataUpdating(' + value + ')"><i class="fa fa-pencil-square-o"></i>编辑</a>';
+                            html += '<a id="" title="暂停"  authorize="yes" onclick="UpdateJobState(' + value + ',2)"><i class="fa fa-pencil-square-o"></i>暂停</a>';
+                            html += '<a id="" title="停止"  authorize="yes" onclick="UpdateJobState(' + value + ',3)"><i class="fa fa-pencil-square-o"></i>停止</a>';
+                            html += '<a id="" title="结束"  authorize="yes" onclick="UpdateJobState(' + value + ',4)"><i class="fa fa-pencil-square-o"></i>结束</a>';
+                            //html += '<a id="btnDelete" title="删除" authorize="yes" onclick="viewModel.onDataDeleting(' + value + ')"><i class="fa fa-trash-o"></i>删除</a>';
+                            html += '';
+                            return html;
+                        }
+                    },
+                ],
+            });
+            //添加授权的初始按钮
+            // $("#btnInit").append(cloud.auth.grantedButtons({ location: 1 }));
+
+        });
+        /**
+         * 更新状态
+         * @@param id Job 的ID
+         * @@param state 状态 2 暂停 3 停止 4 结束
+         */
+        function UpdateJobState(id, state) {
+            job.AjaxPost({
+                url: '/job/update',
+                data: { Id: id, Job_state: state },
+                success: function (data) {
+                    if (data.Status == 0) {
+                        $("#btnSearch").click();
+                    }
+                }
+            });
+        }
+    </script>
+}
+
